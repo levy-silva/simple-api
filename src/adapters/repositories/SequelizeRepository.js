@@ -22,7 +22,7 @@ class SequelizeRepository {
     }
 
     async updateById(id, update) {
-        const isUpdated = await database[this.model].update({ where: { id: id } });
+        const isUpdated = await database[this.model].update(update, { where: { id: id } });
         if (isUpdated[0] === 0) return false;
         return true;
     }
