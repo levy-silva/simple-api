@@ -1,6 +1,5 @@
 const notAlpha = require("../../infra/utils/validators/notAlhpa.js");
 const notString = require("../../infra/utils/validators/notString.js");
-const isUndefined = require("../../infra/utils/validators/isUndefined.js");
 const notRequired = require("../../infra/utils/validators/notRequired.js");
 const MaxlengthError = require("../../infra/utils/messages/MaxlengthError.js");
 const MinlengthError = require("../../infra/utils/messages/MinlengthError.js");
