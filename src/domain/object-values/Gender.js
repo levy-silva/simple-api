@@ -1,6 +1,7 @@
 const notIn = require("../../infra/utils/validators/notIn.js");
 const notString = require("../../infra/utils/validators/notString.js");
-const isUndefined = require("../../infra/utils/validators/isUndefined.js");
+const isRequired = require("../../infra/utils/validators/isRequired.js");
+const notRequired = require("../../infra/utils/validators/notRequired.js");
 const ValidationHandler = require("../../infra/utils/helpers/ValidationHandler.js");
 const InverseValueError = require("../../infra/utils/messages/InverseValueError.js");
 const MissingPropertyError = require("../../infra/utils/messages/MissingPropertyError.js");
@@ -12,11 +13,11 @@ class Gender {
     }
 
     execute({ required = true }) {
-        const gender = this.gender, path = "gender", values = ["male", "female"];
-        if (required === false && isUndefined(gender)) return;
+        const gender = this.gender, boolean = required, path = "gender", values = ["male", "female"];
         if (notString(gender)) throw new ValidationHandler(new InverseStringTypeError(path));
+        if (isRequired(gender, boolean)) throw new ValidationHandler(new MissingPropertyError(path));
         if (notIn(gender, values)) throw new ValidationHandler(new InverseValueError(gender, values));
-        if (required === true && isUndefined(gender)) throw new ValidationHandler(new MissingPropertyError(path));
+        if (notRequired(gender, boolean)) return;
         else return gender;
     }
 }

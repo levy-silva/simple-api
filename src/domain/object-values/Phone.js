@@ -1,12 +1,13 @@
-const isUndefined = require("../../infra/utils/validators/isUndefined");
-const MinlengthError = require("../../infra/utils/messages/MinlengthError");
-const MaxlengthError = require("../../infra/utils/messages/MaxlengthError");
-const lengthLessThan = require("../../infra/utils/validators/lengthLessThan");
-const ValidationHandler = require("../../infra/utils/helpers/ValidationHandler");
-const lengthGraterThan = require("../../infra/utils/validators/lengthGreaterThan");
-const notValidPhoneNumber = require("../../infra/utils/validators/notValidPhoneNumber");
-const MissingPropertyError = require("../../infra/utils/messages/MissingPropertyError");
-const InvalidPhoneNumberError = require("../../infra/utils/messages/InvalidPhoneNumberError");
+const isRequired = require("../../infra/utils/validators/isRequired.js");
+const notRequired = require("../../infra/utils/validators/notRequired.js");
+const MinlengthError = require("../../infra/utils/messages/MinlengthError.js");
+const MaxlengthError = require("../../infra/utils/messages/MaxlengthError.js");
+const lengthLessThan = require("../../infra/utils/validators/lengthLessThan.js");
+const ValidationHandler = require("../../infra/utils/helpers/ValidationHandler.js");
+const lengthGraterThan = require("../../infra/utils/validators/lengthGreaterThan.js");
+const notValidPhoneNumber = require("../../infra/utils/validators/notValidPhoneNumber.js");
+const MissingPropertyError = require("../../infra/utils/messages/MissingPropertyError.js");
+const InvalidPhoneNumberError = require("../../infra/utils/messages/InvalidPhoneNumberError.js");
 
 class Phone {
     constructor(phone) {
@@ -14,12 +15,12 @@ class Phone {
     }
 
     execute({ required = true }) {
-        const phone = this.phone, path = "phone", max = 11;
-        if (required === false && isUndefined(phone)) return;
+        const phone = this.phone, boolean = required, path = "phone", max = 11;
         if (lengthLessThan(max)) throw new ValidationHandler(new MinlengthError(path, max));
         if (lengthGraterThan(max)) throw new ValidationHandler(new MaxlengthError(path, max));
+        if (isRequired(phone, boolean)) throw new ValidationHandler(new MissingPropertyError(path));
         if (notValidPhoneNumber(phone)) throw new ValidationHandler(new InvalidPhoneNumberError(phone));
-        if (required === true && isUndefined(phone)) throw new ValidationHandler(new MissingPropertyError(path));
+        if (notRequired(phone, boolean)) return;
         else return phone;
     }
 }
