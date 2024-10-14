@@ -7,7 +7,7 @@ class UserController extends Controller {
 
     async createUser(req, res, next) {
         try {
-            const newUser = await this.useCase.create(req.body);
+            const newUser = await this.useCase.createUser(req.body);
             return res.status(201).json({ message: "User created successfully.", record: newUser });
         } catch (error) {
             next(error);
