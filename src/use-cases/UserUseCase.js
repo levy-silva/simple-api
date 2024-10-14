@@ -1,4 +1,6 @@
 const User = require("../domain/entities/User.js");
+const ConflicError = require("../infra/utils/helpers/ConflicError.js");
+const ExistingEmailError = require("../infra/utils/messages/ExistingEmailError.js");
 
 class UserUseCase {
     constructor(userRepository) {
@@ -7,6 +9,8 @@ class UserUseCase {
 
     async createUser(dto) {
         const user = new User(dto);
+        const existingUser = await this.userRepository.getByEmail(user.email);
+        if (existingUser) throw new ConflicError(new ExistingEmailError(user.email));
         return this.userRepository.create(user);
     }
 
