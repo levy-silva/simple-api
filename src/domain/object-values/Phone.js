@@ -16,11 +16,11 @@ class Phone {
 
     execute({ required = true }) {
         const phone = this.phone, boolean = required, path = "phone", max = 11;
+        if (notRequired(phone, boolean)) return;
         if (lengthLessThan(max)) throw new ValidationHandler(new MinlengthError(path, max));
         if (lengthGraterThan(max)) throw new ValidationHandler(new MaxlengthError(path, max));
         if (isRequired(phone, boolean)) throw new ValidationHandler(new MissingPropertyError(path));
         if (notValidPhoneNumber(phone)) throw new ValidationHandler(new InvalidPhoneNumberError(phone));
-        if (notRequired(phone, boolean)) return;
         else return phone;
     }
 }

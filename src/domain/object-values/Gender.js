@@ -14,10 +14,10 @@ class Gender {
 
     execute({ required = true }) {
         const gender = this.gender, boolean = required, path = "gender", values = ["male", "female"];
+        if (notRequired(gender, boolean)) return;
         if (notString(gender)) throw new ValidationHandler(new InverseStringTypeError(path));
         if (isRequired(gender, boolean)) throw new ValidationHandler(new MissingPropertyError(path));
         if (notIn(gender, values)) throw new ValidationHandler(new InverseValueError(gender, values));
-        if (notRequired(gender, boolean)) return;
         else return gender;
     }
 }

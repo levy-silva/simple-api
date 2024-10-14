@@ -16,12 +16,12 @@ class Name {
     }
     execute({ required = true }) {
         const name = this.name, boolean = required, path = "name", min = 3, max = 20;
+        if (notRequired(name, boolean)) return;
         if (notAlpha(name)) throw new ValidationHandler(new InverseAlphabeticError(path));
         if (notString(name)) throw new ValidationHandler(new InverseStringTypeError(path));
         if (lengthLessThan(name, min)) throw new ValidationHandler(new MinlengthError(path, min));
         if (isRequired(name, boolean)) throw new ValidationHandler(new MissingPropertyError(path));
         if (lengthGraterThan(name, max)) throw new ValidationHandler(new MaxlengthError(path, max));
-        if (notRequired(name, boolean)) return;
         else return name;
     }
 }

@@ -18,12 +18,12 @@ class Email {
 
     execute({ required = true }) {
         const email = this.email, boolean = required, path = "email", min = 5, max = 254;
+        if (notRequired(email, boolean)) return;
         if (notString(email)) throw new ValidationHandler(new InverseStringTypeError(path));
         if (notValidEmail(email)) throw new ValidationHandler(new InvalidEmailError(email));
         if (lengthLessThan(email, min)) throw new ValidationHandler(new MinlengthError(path, min));
         if (lengthGraterThan(email, max)) throw new ValidationHandler(new MaxlengthError(path, max));
         if (isRequired(email, boolean)) throw new ValidationHandler(new MissingPropertyError(path));
-        if (notRequired(email, boolean)) return;
         else return email;
     }
 }
