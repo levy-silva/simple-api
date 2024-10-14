@@ -15,10 +15,11 @@ class Phone {
 
     execute({ required = true }) {
         const phone = this.phone, path = "phone", max = 11;
+        if (required === false && isUndefined(phone)) return;
         if (lengthLessThan(max)) throw new ValidationHandler(new MinlengthError(path, max));
         if (lengthGraterThan(max)) throw new ValidationHandler(new MaxlengthError(path, max));
         if (notValidPhoneNumber(phone)) throw new ValidationHandler(new InvalidPhoneNumberError(phone));
-        if (required && isUndefined(phone)) throw new ValidationHandler(new MissingPropertyError(path));
+        if (required === true && isUndefined(phone)) throw new ValidationHandler(new MissingPropertyError(path));
         else return phone;
     }
 }

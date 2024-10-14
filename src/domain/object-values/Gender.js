@@ -13,9 +13,10 @@ class Gender {
 
     execute({ required = true }) {
         const gender = this.gender, path = "gender", values = ["male", "female"];
+        if (required === false && isUndefined(gender)) return;
         if (notString(gender)) throw new ValidationHandler(new InverseStringTypeError(path));
         if (notIn(gender, values)) throw new ValidationHandler(new InverseValueError(gender, values));
-        if (required && isUndefined(gender)) throw new ValidationHandler(new MissingPropertyError(path));
+        if (required === true && isUndefined(gender)) throw new ValidationHandler(new MissingPropertyError(path));
         else return gender;
     }
 }
